@@ -1,8 +1,10 @@
 package com.example.fleetmanagement.service;
 
 import com.example.fleetmanagement.dto.VehicleRequest;
+import com.example.fleetmanagement.entity.User;
 import com.example.fleetmanagement.entity.Vehicle;
 import com.example.fleetmanagement.entity.VehicleStatus;
+import com.example.fleetmanagement.repository.UserRepository;
 import com.example.fleetmanagement.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,27 +15,32 @@ import java.util.Optional;
 public class VehicleService {
 
     private final VehicleRepository vehicleRepository;
+    private final UserRepository userRepository;
 
-    public VehicleService(VehicleRepository vehicleRepository) {
+    public VehicleService(VehicleRepository vehicleRepository,
+                          UserRepository userRepository) {
         this.vehicleRepository = vehicleRepository;
+        this.userRepository = userRepository;
     }
 
     public Vehicle addVehicle(VehicleRequest request) {
 
         Vehicle vehicle = new Vehicle();
 
-        vehicle.setVehicleId(request.getVehicleId());
         vehicle.setVehicleName(request.getVehicleName());
         vehicle.setVehicleNumber(request.getVehicleNumber());
         vehicle.setVehicleType(request.getVehicleType());
         vehicle.setModelYear(request.getModelYear());
         vehicle.setDriverName(request.getDriverName());
         vehicle.setDriverLicense(request.getDriverLicense());
-        vehicle.setStatus(request.getStatus());
+        vehicle.setMillage(request.getMillage());
+
         vehicle.setFuelLevel(request.getFuelLevel());
-        vehicle.setSpeed(request.getSpeed());
+        vehicle.setLocation(request.getLocation());
         vehicle.setLatitude(request.getLatitude());
         vehicle.setLongitude(request.getLongitude());
+
+        vehicle.setStatus(request.getStatus());
 
         return vehicleRepository.save(vehicle);
     }
@@ -42,13 +49,13 @@ public class VehicleService {
         return vehicleRepository.findAll();
     }
 
-    public Optional<Vehicle> getVehicleByVehicleId(String vehicleId) {
-        return vehicleRepository.findByVehicleId(vehicleId);
+    public Optional<Vehicle> getVehicleByVehicleNumber(String vehicleNumber) {
+        return vehicleRepository.findByVehicleNumber(vehicleNumber);
     }
 
-    public Vehicle updateVehicle(String vehicleId, VehicleRequest request) {
+    public Vehicle updateVehicle(String vehicleNumber, VehicleRequest request) {
 
-        Optional<Vehicle> optionalVehicle = vehicleRepository.findByVehicleId(vehicleId);
+        Optional<Vehicle> optionalVehicle = vehicleRepository.findByVehicleNumber(vehicleNumber);
 
         if (optionalVehicle.isPresent()) {
 
@@ -60,11 +67,14 @@ public class VehicleService {
             vehicle.setModelYear(request.getModelYear());
             vehicle.setDriverName(request.getDriverName());
             vehicle.setDriverLicense(request.getDriverLicense());
-            vehicle.setStatus(request.getStatus());
+            vehicle.setMillage(request.getMillage());
+
             vehicle.setFuelLevel(request.getFuelLevel());
-            vehicle.setSpeed(request.getSpeed());
+            vehicle.setLocation(request.getLocation());
             vehicle.setLatitude(request.getLatitude());
             vehicle.setLongitude(request.getLongitude());
+
+            vehicle.setStatus(request.getStatus());
 
             return vehicleRepository.save(vehicle);
         }
@@ -72,14 +82,28 @@ public class VehicleService {
         return null;
     }
 
-    public void deleteVehicle(String vehicleId) {
+    public void deleteVehicle(String vehicleNumber) {
 
-        Optional<Vehicle> optionalVehicle = vehicleRepository.findByVehicleId(vehicleId);
+        Optional<Vehicle> optionalVehicle = vehicleRepository.findByVehicleNumber(vehicleNumber);
 
         optionalVehicle.ifPresent(vehicleRepository::delete);
     }
 
     public List<Vehicle> getAvailableVehicles() {
         return vehicleRepository.findByStatus(VehicleStatus.AVAILABLE);
+    }
+
+    // 🔥 NEW METHOD (IMPORTANT)
+    public Vehicle getVehicleByDriverEmail(String email) {
+
+        User driver = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Driver not found"));
+
+        return vehicleRepository
+                .findByDriverNameAndDriverLicense(
+                        driver.getFullName(),
+                        driver.getLicenseNo()
+                )
+                .orElse(null);
     }
 }

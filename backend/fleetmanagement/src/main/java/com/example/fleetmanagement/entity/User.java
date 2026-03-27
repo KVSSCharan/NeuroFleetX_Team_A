@@ -10,8 +10,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -21,16 +21,18 @@ public class User {
 
     private String gender;
 
-    private String phone;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
-    private String company;
+    // Fleet Manager specific
+    @Column(name = "company_name")
+    private String companyName;
 
+    // Driver specific
     @Column(name = "license_no")
     private String licenseNo;
 
-    @Column(name = "vehicle_no")
-    private String vehicleNo;
-
+    // Customer specific
     @Column(name = "govt_id")
     private String govtId;
 
@@ -41,8 +43,8 @@ public class User {
 
     public Long getId() { return id; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
@@ -53,17 +55,14 @@ public class User {
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }
 
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
-    public String getCompany() { return company; }
-    public void setCompany(String company) { this.company = company; }
+    public String getCompanyName() { return companyName; }
+    public void setCompanyName(String companyName) { this.companyName = companyName; }
 
     public String getLicenseNo() { return licenseNo; }
     public void setLicenseNo(String licenseNo) { this.licenseNo = licenseNo; }
-
-    public String getVehicleNo() { return vehicleNo; }
-    public void setVehicleNo(String vehicleNo) { this.vehicleNo = vehicleNo; }
 
     public String getGovtId() { return govtId; }
     public void setGovtId(String govtId) { this.govtId = govtId; }

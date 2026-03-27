@@ -4,8 +4,6 @@ import com.example.fleetmanagement.entity.VehicleStatus;
 
 public class VehicleRequest {
 
-    private String vehicleId;
-
     private String vehicleName;
 
     private String vehicleNumber;
@@ -18,25 +16,19 @@ public class VehicleRequest {
 
     private String driverLicense;
 
+    private double millage;
+
     private VehicleStatus status;
 
     private int fuelLevel;
 
-    private int speed;
+    private String location;
 
     private double latitude;
 
     private double longitude;
 
     public VehicleRequest() {
-    }
-
-    public String getVehicleId() {
-        return vehicleId;
-    }
-
-    public void setVehicleId(String vehicleId) {
-        this.vehicleId = vehicleId;
     }
 
     public String getVehicleName() {
@@ -87,6 +79,14 @@ public class VehicleRequest {
         this.driverLicense = driverLicense;
     }
 
+    public double getMillage() {
+        return millage;
+    }
+
+    public void setMillage(double millage) {
+        this.millage = millage;
+    }
+
     public VehicleStatus getStatus() {
         return status;
     }
@@ -103,12 +103,12 @@ public class VehicleRequest {
         this.fuelLevel = fuelLevel;
     }
 
-    public int getSpeed() {
-        return speed;
+    public String getLocation() {
+        return location;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public double getLatitude() {

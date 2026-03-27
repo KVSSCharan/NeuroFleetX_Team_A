@@ -79,11 +79,13 @@ public class JwtUtil {
     // ===============================
     // VALIDATE TOKEN
     // ===============================
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token, String email) {
 
         try {
 
-            return !isTokenExpired(token);
+            final String tokenEmail = extractEmail(token);
+
+            return (tokenEmail.equals(email) && !isTokenExpired(token));
 
         } catch (JwtException | IllegalArgumentException e) {
 

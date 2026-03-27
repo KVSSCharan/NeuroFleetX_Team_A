@@ -49,89 +49,61 @@ public class AuthController {
             return response;
         }
 
-        // Basic required fields validation
-        if (request.getName() == null || request.getName().isEmpty() ||
+        // Basic validation
+        if (request.getFullName() == null || request.getFullName().isEmpty() ||
             request.getEmail() == null || request.getEmail().isEmpty() ||
             request.getPassword() == null || request.getPassword().isEmpty() ||
             request.getGender() == null || request.getGender().isEmpty() ||
+            request.getPhoneNumber() == null || request.getPhoneNumber().isEmpty() ||
             request.getRole() == null) {
 
             response.put("message", "All required fields must be filled");
             return response;
         }
 
-        // Role specific validation
         Role role = request.getRole();
 
+        // Role specific validation
         switch (role) {
 
-            case ADMIN:
-                if (request.getPhone() == null || request.getPhone().isEmpty()) {
-                    response.put("message", "Phone number is required for Admin");
-                    return response;
-                }
-                break;
-
             case FLEET_MANAGER:
-                if (request.getCompany() == null || request.getCompany().isEmpty() ||
-                    request.getPhone() == null || request.getPhone().isEmpty()) {
-
-                    response.put("message", "Company name and phone are required for Fleet Manager");
+                if (request.getCompanyName() == null || request.getCompanyName().isEmpty()) {
+                    response.put("message", "Company name required for Fleet Manager");
                     return response;
                 }
                 break;
 
             case DRIVER:
-                if (request.getLicenseNo() == null || request.getLicenseNo().isEmpty() ||
-                    request.getVehicleNo() == null || request.getVehicleNo().isEmpty() ||
-                    request.getPhone() == null || request.getPhone().isEmpty()) {
-
-                    response.put("message", "License number, vehicle number, and phone are required for Driver");
+                if (request.getLicenseNo() == null || request.getLicenseNo().isEmpty()) {
+                    response.put("message", "Driving license required for Driver");
                     return response;
                 }
                 break;
 
             case CUSTOMER:
-                if (request.getGovtId() == null || request.getGovtId().isEmpty() ||
-                    request.getPhone() == null || request.getPhone().isEmpty()) {
-
-                    response.put("message", "Government ID and phone are required for Customer");
+                if (request.getGovtId() == null || request.getGovtId().isEmpty()) {
+                    response.put("message", "Government ID required for Customer");
                     return response;
                 }
+                break;
+
+            default:
                 break;
         }
 
         // Create user
         User user = new User();
-        user.setName(request.getName());
+        user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setGender(request.getGender());
+        user.setPhoneNumber(request.getPhoneNumber());
         user.setRole(role);
 
-        // Role specific field assignment
-        switch (role) {
-
-            case ADMIN:
-                user.setPhone(request.getPhone());
-                break;
-
-            case FLEET_MANAGER:
-                user.setCompany(request.getCompany());
-                user.setPhone(request.getPhone());
-                break;
-
-            case DRIVER:
-                user.setLicenseNo(request.getLicenseNo());
-                user.setVehicleNo(request.getVehicleNo());
-                user.setPhone(request.getPhone());
-                break;
-
-            case CUSTOMER:
-                user.setGovtId(request.getGovtId());
-                user.setPhone(request.getPhone());
-                break;
-        }
+        // Role specific assignments
+        user.setCompanyName(request.getCompanyName());
+        user.setLicenseNo(request.getLicenseNo());
+        user.setGovtId(request.getGovtId());
 
         userRepository.save(user);
 

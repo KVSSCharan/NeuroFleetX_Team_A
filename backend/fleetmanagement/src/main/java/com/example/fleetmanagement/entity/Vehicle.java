@@ -10,41 +10,45 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String vehicleId;
-
+    @Column(name = "vehicle_name")
     private String vehicleName;
 
+    @Column(name = "vehicle_registration_number", unique = true)
     private String vehicleNumber;
 
-    private String vehicleType;
-
-    private int modelYear;
-
+    @Column(name = "driver_name")
     private String driverName;
 
+    @Column(name = "driver_license_number")
     private String driverLicense;
 
-    @Enumerated(EnumType.STRING)
-    private VehicleStatus status;
+    @Column(name = "vehicle_type")
+    private String vehicleType;
 
+    @Column(name = "model_year")
+    private int modelYear;
+
+    @Column(name = "millage")
+    private double millage;
+
+    // Telemetry fields (updated by driver)
+
+    @Column(name = "fuel_level")
     private int fuelLevel;
 
-    private int speed;
+    private String location;
 
     private double latitude;
 
     private double longitude;
 
-    public Vehicle() {
-    }
+    @Enumerated(EnumType.STRING)
+    private VehicleStatus status;
+
+    public Vehicle() {}
 
     public Long getId() {
         return id;
-    }
-
-    public String getVehicleId() {
-        return vehicleId;
     }
 
     public String getVehicleName() {
@@ -55,14 +59,6 @@ public class Vehicle {
         return vehicleNumber;
     }
 
-    public String getVehicleType() {
-        return vehicleType;
-    }
-
-    public int getModelYear() {
-        return modelYear;
-    }
-
     public String getDriverName() {
         return driverName;
     }
@@ -71,16 +67,24 @@ public class Vehicle {
         return driverLicense;
     }
 
-    public VehicleStatus getStatus() {
-        return status;
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public int getModelYear() {
+        return modelYear;
+    }
+
+    public double getMillage() {
+        return millage;
     }
 
     public int getFuelLevel() {
         return fuelLevel;
     }
 
-    public int getSpeed() {
-        return speed;
+    public String getLocation() {
+        return location;
     }
 
     public double getLatitude() {
@@ -91,12 +95,12 @@ public class Vehicle {
         return longitude;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public VehicleStatus getStatus() {
+        return status;
     }
 
-    public void setVehicleId(String vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setVehicleName(String vehicleName) {
@@ -107,14 +111,6 @@ public class Vehicle {
         this.vehicleNumber = vehicleNumber;
     }
 
-    public void setVehicleType(String vehicleType) {
-        this.vehicleType = vehicleType;
-    }
-
-    public void setModelYear(int modelYear) {
-        this.modelYear = modelYear;
-    }
-
     public void setDriverName(String driverName) {
         this.driverName = driverName;
     }
@@ -123,16 +119,24 @@ public class Vehicle {
         this.driverLicense = driverLicense;
     }
 
-    public void setStatus(VehicleStatus status) {
-        this.status = status;
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
+    public void setModelYear(int modelYear) {
+        this.modelYear = modelYear;
+    }
+
+    public void setMillage(double millage) {
+        this.millage = millage;
     }
 
     public void setFuelLevel(int fuelLevel) {
         this.fuelLevel = fuelLevel;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public void setLatitude(double latitude) {
@@ -141,5 +145,9 @@ public class Vehicle {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public void setStatus(VehicleStatus status) {
+        this.status = status;
     }
 }

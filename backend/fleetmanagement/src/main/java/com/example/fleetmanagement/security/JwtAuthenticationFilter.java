@@ -42,8 +42,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             token = authHeader.substring(7);
 
-            if (jwtUtil.validateToken(token)) {
-                email = jwtUtil.extractEmail(token);
+            email = jwtUtil.extractEmail(token);
+
+            if (jwtUtil.validateToken(token, email)) {
                 role = jwtUtil.extractRole(token);
             }
         }

@@ -3,7 +3,7 @@ package com.example.fleetmanagement.entity;
 public enum VehicleStatus {
 
     AVAILABLE,
-    IN_USE,
-    MAINTENANCE
+    IN_TRANSIT,
+    UNDER_MAINTENANCE
 
 }

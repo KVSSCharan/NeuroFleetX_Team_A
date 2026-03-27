@@ -9,8 +9,10 @@ import java.util.Optional;
 
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
-    Optional<Vehicle> findByVehicleId(String vehicleId);
+    Optional<Vehicle> findByVehicleNumber(String vehicleNumber);
 
     List<Vehicle> findByStatus(VehicleStatus status);
 
+    // 🔥 NEW METHOD (REQUIRED FOR DRIVER MODULE)
+    Optional<Vehicle> findByDriverNameAndDriverLicense(String driverName, String driverLicense);
 }

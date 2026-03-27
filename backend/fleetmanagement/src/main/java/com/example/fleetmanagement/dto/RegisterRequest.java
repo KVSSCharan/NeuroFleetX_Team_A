@@ -4,27 +4,27 @@ import com.example.fleetmanagement.entity.Role;
 
 public class RegisterRequest {
 
-    private String name;
+    private String fullName;
     private String email;
     private String password;
     private String gender;
-    private String phone;
+    private String phoneNumber;
 
-    private String company;
+    // Role specific fields
+    private String companyName;
     private String licenseNo;
-    private String vehicleNo;
     private String govtId;
 
     private Role role;
 
     // Getters and Setters
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -51,20 +51,20 @@ public class RegisterRequest {
         this.gender = gender;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getCompany() {
-        return company;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getLicenseNo() {
@@ -73,14 +73,6 @@ public class RegisterRequest {
 
     public void setLicenseNo(String licenseNo) {
         this.licenseNo = licenseNo;
-    }
-
-    public String getVehicleNo() {
-        return vehicleNo;
-    }
-
-    public void setVehicleNo(String vehicleNo) {
-        this.vehicleNo = vehicleNo;
     }
 
     public String getGovtId() {
