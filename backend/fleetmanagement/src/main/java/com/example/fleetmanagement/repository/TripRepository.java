@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface TripRepository extends JpaRepository<Trip, Long> {
 
-    Optional<Trip> findFirstByDriverAndStatusIn(User driver, java.util.List<String> statuses);
+    Optional<Trip> findByDriverAndStatus(User driver, String status);
 }

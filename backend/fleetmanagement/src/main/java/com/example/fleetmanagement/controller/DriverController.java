@@ -5,6 +5,8 @@ import com.example.fleetmanagement.entity.Trip;
 import com.example.fleetmanagement.entity.Vehicle;
 import com.example.fleetmanagement.service.TripService;
 import com.example.fleetmanagement.service.VehicleService;
+
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,11 +24,13 @@ public class DriverController {
         this.tripService = tripService;
     }
 
+    // 🔥 GET DRIVER VEHICLE
     @GetMapping("/vehicle")
     public Vehicle getAssignedVehicle(Authentication authentication) {
         return vehicleService.getVehicleByDriverEmail(authentication.getName());
     }
 
+    // 🔥 CURRENT TRIP
     @GetMapping("/trip/current")
     public Trip getCurrentTrip(Authentication authentication) {
         return tripService.getCurrentTripByDriverEmail(authentication.getName());
@@ -34,7 +38,7 @@ public class DriverController {
 
     // 🔥 START TRIP
     @PostMapping("/trip/start/{tripId}")
-    public Trip startTrip(@PathVariable Long tripId,
+    public Trip startTrip(@PathVariable @NonNull Long tripId,
                           Authentication authentication) {
 
         return tripService.startTrip(tripId, authentication.getName());
@@ -42,12 +46,13 @@ public class DriverController {
 
     // 🔥 END TRIP
     @PostMapping("/trip/end/{tripId}")
-    public Trip endTrip(@PathVariable Long tripId,
+    public Trip endTrip(@PathVariable @NonNull Long tripId,
                         Authentication authentication) {
 
         return tripService.endTrip(tripId, authentication.getName());
     }
 
+    // 🔥 TELEMETRY UPDATE
     @PutMapping("/vehicles/{vehicleNumber}/telemetry")
     public Vehicle updateTelemetry(@PathVariable String vehicleNumber,
                                    @RequestBody VehicleRequest request) {

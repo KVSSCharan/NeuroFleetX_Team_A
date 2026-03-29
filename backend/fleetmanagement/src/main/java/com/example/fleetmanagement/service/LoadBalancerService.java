@@ -18,15 +18,16 @@ public class LoadBalancerService {
 
     public Vehicle assignVehicle(int passengers) {
 
-        List<Vehicle> vehicles = vehicleRepository.findAll();
+        List<Vehicle> availableVehicles =
+                vehicleRepository.findByStatus(VehicleStatus.AVAILABLE);
 
-        for (Vehicle v : vehicles) {
+        for (Vehicle v : availableVehicles) {
 
-            if (v.getStatus() == VehicleStatus.AVAILABLE && v.getFuelLevel() > 20) {
+            if (v.getFuelLevel() > 20) {
                 return v;
             }
         }
 
-        return null;
+        throw new RuntimeException("No vehicles available");
     }
 }

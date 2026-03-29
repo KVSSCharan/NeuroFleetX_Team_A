@@ -3,10 +3,13 @@ package com.example.fleetmanagement.repository;
 import com.example.fleetmanagement.entity.Booking;
 import com.example.fleetmanagement.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByCustomer(User customer);
 
+    // ✅ DRIVER BOOKINGS
+    List<Booking> findByVehicle_Driver(User driver);
 }

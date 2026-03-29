@@ -16,11 +16,17 @@ public class Vehicle {
     @Column(name = "vehicle_registration_number", unique = true)
     private String vehicleNumber;
 
+    // 🔥 KEEP (for display purpose)
     @Column(name = "driver_name")
     private String driverName;
 
     @Column(name = "driver_license_number")
     private String driverLicense;
+
+    // 🔥 NEW (REAL RELATION - IMPORTANT)
+    @ManyToOne
+    @JoinColumn(name = "driver_id")
+    private User driver;
 
     @Column(name = "vehicle_type")
     private String vehicleType;
@@ -31,7 +37,7 @@ public class Vehicle {
     @Column(name = "millage")
     private double millage;
 
-    // Telemetry fields (updated by driver)
+    // Telemetry fields
 
     @Column(name = "fuel_level")
     private int fuelLevel;
@@ -46,6 +52,8 @@ public class Vehicle {
     private VehicleStatus status;
 
     public Vehicle() {}
+
+    // 🔥 GETTERS
 
     public Long getId() {
         return id;
@@ -65,6 +73,10 @@ public class Vehicle {
 
     public String getDriverLicense() {
         return driverLicense;
+    }
+
+    public User getDriver() {   // ✅ FIXED ERROR
+        return driver;
     }
 
     public String getVehicleType() {
@@ -99,6 +111,8 @@ public class Vehicle {
         return status;
     }
 
+    // 🔥 SETTERS
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -117,6 +131,10 @@ public class Vehicle {
 
     public void setDriverLicense(String driverLicense) {
         this.driverLicense = driverLicense;
+    }
+
+    public void setDriver(User driver) {   // ✅ IMPORTANT
+        this.driver = driver;
     }
 
     public void setVehicleType(String vehicleType) {
